@@ -7,7 +7,8 @@
  */
 
 namespace App\Repositories;
-
+Use Exception;
+use Illuminate\Database\Eloquent\Model;
 
 class Repository implements RepositoryInterface
 {
@@ -20,21 +21,22 @@ protected $model;
      */
     public function __construct()
     {
-        $this->model = $model = $this->makeModel();
+        $this->model = $this->makeModel();
     }
 
     abstract  function model ();
 
-    public function makeModel(){
+    public function makeModel()
+    {
 
-        $model = App::make($this->model());
+        $model = App::make($this->makeModel());
 
-        if(!$model instanceof Model(){
-                throw new Exception;
-            }
+        if (!$model instanceof makeModel()) {
+            throw new Exception;
+        }
         return $model;
-
     }
+
     /**
      * @return mixed
      */
