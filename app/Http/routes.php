@@ -11,6 +11,8 @@
 |
 */
 
+use App\Repositories\InvoiceRepository;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -28,11 +30,11 @@ Route::get('/', function () {
 
 Route::group(['middleware' => ['web']], function () {
     //
-    Route::get('/invoices', 'InvoicesController@index');
-});
-
-Route::group(['middleware' => 'web'], function () {
+    Route::get('/invoices',['middleware'=>'auth'], 'InvoicesController@index');
     Route::auth();
 
     Route::get('/home', 'HomeController@index');
 });
+
+
+App::bind('RepositoryInterface', InvoiceRepository::class);

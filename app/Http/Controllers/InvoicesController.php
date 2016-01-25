@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 use App\Invoices;
+use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -10,18 +11,17 @@ class InvoicesController extends Controller
     //
     public function index()
     {
-        if ( !Auth::check() ) {
-            return "Forbidden!";
-        }
-        $database_invoices = $this->getAllInvoicesFromDatabase();
-        $invoices = $this->transform($database_invoices);
+        $invoices = $this->invoicesTransform->transform(
+            $this->repo->all());
         return view('invoices',compact('invoices'));
-//        $data['invoices'] = $invoices;
+
 //        return view('invoices',$data);
     }
-    private function getAllInvoicesFromDatabase()
+
+    public function __construct(UserRepository $repo)
     {
-        return Invoices::all();
+
+        $this->repo = $repo;
     }
     private function transform($database_invoices)
     {
