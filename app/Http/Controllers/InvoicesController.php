@@ -18,14 +18,10 @@ class InvoicesController extends Controller
 //        return view('invoices',$data);
     }
 
-    public function __construct(UserRepository $repo)
+    public function __construct(RepositoryInterface $repo , InvoicesTransformer $invoicesTransform)
     {
-
+        $this->invoicesTransform = $invoicesTransform;
         $this->repo = $repo;
     }
-    private function transform($database_invoices)
-    {
-        //Nothing here -> no transformations example
-        return $database_invoices;
-    }
+
 }
